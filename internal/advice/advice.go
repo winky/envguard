@@ -21,7 +21,7 @@ func Generate(findings []model.Finding) []Advice {
 	if sources[model.SourceEnv] || sources[model.SourceShellConfig] || sources[model.SourceDirenv] {
 		advice = append(advice, Advice{
 			ID:      "env-isolation",
-			Title:   "環境変数の分離起動",
+			Title:   "Isolate environment variables at launch",
 			Command: "env -i HOME=\"$HOME\" PATH=\"$PATH\" bash --norc --noprofile",
 		})
 	}
@@ -29,7 +29,7 @@ func Generate(findings []model.Finding) []Advice {
 	if sources[model.SourceCredentialFile] {
 		advice = append(advice, Advice{
 			ID:      "credential-manager",
-			Title:   "クレデンシャルマネージャの利用",
+			Title:   "Use a credential manager",
 			Command: "aws-vault exec <profile> -- <command>  # または 1Password CLI: op run -- <command>",
 		})
 	}
@@ -37,7 +37,7 @@ func Generate(findings []model.Finding) []Advice {
 	if sources[model.SourceLaunchAgent] {
 		advice = append(advice, Advice{
 			ID:      "launch-agent-review",
-			Title:   "LaunchAgent の確認",
+			Title:   "Review LaunchAgent definitions",
 			Command: "ls ~/Library/LaunchAgents/ && plutil -p ~/Library/LaunchAgents/*.plist",
 		})
 	}
