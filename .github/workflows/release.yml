@@ -23,11 +23,11 @@ jobs:
       - name: Build binaries
         run: |
           VERSION=${GITHUB_REF_NAME}
-          LDFLAGS="-ldflags=-X main.version=${VERSION}"
-          GOOS=darwin  GOARCH=amd64  go build ${LDFLAGS} -o dist/envguard-darwin-amd64  .
-          GOOS=darwin  GOARCH=arm64  go build ${LDFLAGS} -o dist/envguard-darwin-arm64  .
-          GOOS=linux   GOARCH=amd64  go build ${LDFLAGS} -o dist/envguard-linux-amd64   .
-          GOOS=linux   GOARCH=arm64  go build ${LDFLAGS} -o dist/envguard-linux-arm64   .
+          mkdir -p dist
+          GOOS=darwin  GOARCH=amd64  go build -ldflags="-X main.version=${VERSION}" -o dist/envguard-darwin-amd64  .
+          GOOS=darwin  GOARCH=arm64  go build -ldflags="-X main.version=${VERSION}" -o dist/envguard-darwin-arm64  .
+          GOOS=linux   GOARCH=amd64  go build -ldflags="-X main.version=${VERSION}" -o dist/envguard-linux-amd64   .
+          GOOS=linux   GOARCH=arm64  go build -ldflags="-X main.version=${VERSION}" -o dist/envguard-linux-arm64   .
 
       - name: Generate release notes
         id: notes
