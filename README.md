@@ -1,10 +1,10 @@
 # envguard
 
-Detect exposed secrets and credentials in your local environment before they reach AI tools like Claude Code.
+Detect exposed secrets and credentials in your local environment before they reach AI tools.
 
 ## Overview
 
-Claude Code inherits the parent shell's environment variables at startup. If credentials like `AWS_SECRET_ACCESS_KEY` are exported in `~/.zshrc`, they become accessible within Claude Code sessions. `envguard` scans your local environment and reports what could be exposed — before you launch AI tools.
+AI coding tools inherit the parent shell's environment variables at startup. If credentials like `AWS_SECRET_ACCESS_KEY` are exported in `~/.zshrc`, they become accessible within AI tool sessions. `envguard` scans your local environment and reports what could be exposed — before you launch any AI tool.
 
 **Read-only.** No files are modified, deleted, or sent over the network.
 
@@ -79,8 +79,8 @@ envguard --only env
 If credentials are found in environment variables:
 
 ```bash
-# Launch Claude Code without inheriting credentials
-env -i HOME="$HOME" PATH="$PATH" SHELL="$SHELL" claude
+# Launch an AI tool without inheriting credentials
+env -i HOME="$HOME" PATH="$PATH" SHELL="$SHELL" <your-ai-tool>
 
 # Or unset per-directory with direnv
 # ~/work/my-project/.envrc
