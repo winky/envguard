@@ -164,13 +164,12 @@ func Run() int {
 	if shouldRun("launchctl") {
 		scanners = append(scanners, namedScanner{"launchctl", &scanner.LaunchctlScanner{}})
 	}
-	// TODO: Enable when scanner implementations are available
-	// if shouldRun("agents") {
-	// 	scanners = append(scanners, namedScanner{"agents", &scanner.LaunchAgentsScanner{}})
-	// }
-	// if shouldRun("direnv") {
-	// 	scanners = append(scanners, namedScanner{"direnv", &scanner.DirenvScanner{Depth: depth}})
-	// }
+	if shouldRun("agents") {
+		scanners = append(scanners, namedScanner{"agents", &scanner.LaunchAgentsScanner{}})
+	}
+	if shouldRun("direnv") {
+		scanners = append(scanners, namedScanner{"direnv", &scanner.DirenvScanner{Depth: depth}})
+	}
 
 	// Run scanners and collect findings
 	var allFindings []scanner.Finding
