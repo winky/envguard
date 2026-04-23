@@ -2,6 +2,9 @@
 envguard
 dist/
 
+# Claude Code ローカル設定
+.claude/settings.local.json
+
 # macOS
 .DS_Store
 
