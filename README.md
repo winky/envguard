@@ -19,13 +19,13 @@ curl -L https://github.com/winky/envguard/releases/latest/download/envguard-darw
 sudo mv envguard /usr/local/bin/envguard
 ```
 
-### macOS Gatekeeper について
+### macOS Gatekeeper
 
-初回実行時にブロックされた場合は、以下の手順で許可できます：
+If the binary is blocked on first run, follow these steps to allow it:
 
-1. **システム設定** を開く
-2. **プライバシーとセキュリティ** を開く
-3. 「お使いのMacを保護するために"envguard"がブロックされました」の右にある **「このまま開く」** をクリック
+1. Open **System Settings**
+2. Go to **Privacy & Security**
+3. Click **"Open Anyway"** next to the message "Apple blocked 'envguard' to protect your Mac"
 
 ## Usage
 
