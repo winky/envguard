@@ -15,9 +15,17 @@ AI coding tools inherit the parent shell's environment variables at startup. If 
 go install github.com/winky/envguard@latest
 
 # Or download a pre-built binary from GitHub Releases
-curl -L https://github.com/winky/envguard/releases/latest/download/envguard-darwin-arm64 -o envguard
-chmod +x envguard
+curl -L https://github.com/winky/envguard/releases/latest/download/envguard-darwin-arm64.tar.gz | tar -xz
+sudo mv envguard /usr/local/bin/envguard
 ```
+
+### macOS Gatekeeper について
+
+初回実行時にブロックされた場合は、以下の手順で許可できます：
+
+1. **システム設定** を開く
+2. **プライバシーとセキュリティ** を開く
+3. 「お使いのMacを保護するために"envguard"がブロックされました」の右にある **「このまま開く」** をクリック
 
 ## Usage
 
