@@ -28,6 +28,8 @@ jobs:
           GOOS=darwin  GOARCH=arm64  go build -ldflags="-X main.version=${VERSION}" -o dist/envguard-darwin-arm64  .
           GOOS=linux   GOARCH=amd64  go build -ldflags="-X main.version=${VERSION}" -o dist/envguard-linux-amd64   .
           GOOS=linux   GOARCH=arm64  go build -ldflags="-X main.version=${VERSION}" -o dist/envguard-linux-arm64   .
+          cd dist
+          for f in envguard-*; do tar -czf "${f}.tar.gz" "${f}" && rm "${f}"; done
 
       - name: Generate release notes
         id: notes
