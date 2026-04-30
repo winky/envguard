@@ -12,7 +12,7 @@ AI coding tools inherit the parent shell's environment variables at startup. If 
 
 ```bash
 # Homebrew (macOS)
-brew install --cask winky/tap/envguard
+brew install winky/tap/envguard
 
 # Go install
 go install github.com/winky/envguard@latest

@@ -16,7 +16,7 @@ builds:
       - arm64
 
 archives:
-  - formats: ["tar.gz"]
+  - format: tar.gz
     name_template: "envguard-{{ .Os }}-{{ .Arch }}"
     files:
       - none*
@@ -31,7 +31,7 @@ changelog:
     exclude:
       - "^Merge"
 
-homebrew_casks:
+brews:
   - name: envguard
     repository:
       owner: winky
@@ -40,3 +40,7 @@ homebrew_casks:
     homepage: "https://github.com/winky/envguard"
     description: "Detect exposed secrets and credentials before they reach AI tools"
     license: "MIT"
+    install: |
+      bin.install "envguard"
+    test: |
+      system "#{bin}/envguard", "--version"
