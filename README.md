@@ -11,21 +11,12 @@ AI coding tools inherit the parent shell's environment variables at startup. If 
 ## Installation
 
 ```bash
+# Homebrew (macOS)
+brew install --cask winky/tap/envguard
+
 # Go install
 go install github.com/winky/envguard@latest
-
-# Or download a pre-built binary from GitHub Releases
-curl -L https://github.com/winky/envguard/releases/latest/download/envguard-darwin-arm64.tar.gz | tar -xz
-sudo mv envguard /usr/local/bin/envguard
 ```
-
-### macOS Gatekeeper
-
-If the binary is blocked on first run, follow these steps to allow it:
-
-1. Open **System Settings**
-2. Go to **Privacy & Security**
-3. Click **"Open Anyway"** next to the message "Apple blocked 'envguard' to protect your Mac"
 
 ## Usage
 
@@ -109,7 +100,6 @@ For long-lived credentials, consider migrating to [aws-vault](https://github.com
 ```bash
 make build    # build for current platform
 make test     # run tests
-make release  # cross-compile for darwin/linux × amd64/arm64
 ```
 
 ## License

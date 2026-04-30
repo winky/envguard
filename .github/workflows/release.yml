@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   release:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
@@ -20,37 +20,10 @@ jobs:
         with:
           go-version-file: go.mod
 
-      - name: Build binaries
-        run: |
-          VERSION=${GITHUB_REF_NAME}
-          mkdir -p dist
-          GOOS=darwin  GOARCH=amd64  go build -ldflags="-X main.version=${VERSION}" -o dist/envguard-darwin-amd64  .
-          GOOS=darwin  GOARCH=arm64  go build -ldflags="-X main.version=${VERSION}" -o dist/envguard-darwin-arm64  .
-          GOOS=linux   GOARCH=amd64  go build -ldflags="-X main.version=${VERSION}" -o dist/envguard-linux-amd64   .
-          GOOS=linux   GOARCH=arm64  go build -ldflags="-X main.version=${VERSION}" -o dist/envguard-linux-arm64   .
-          cd dist
-          for f in envguard-*; do cp "${f}" envguard && tar -czf "${f}.tar.gz" envguard && rm envguard "${f}"; done
-
-      - name: Generate release notes
-        id: notes
-        run: |
-          PREV_TAG=$(git tag --sort=-version:refname | grep -v "^${GITHUB_REF_NAME}$" | head -1)
-          if [ -n "${PREV_TAG}" ]; then
-            RANGE="${PREV_TAG}..${GITHUB_REF_NAME}"
-          else
-            RANGE="${GITHUB_REF_NAME}"
-          fi
-          {
-            echo "## What's Changed"
-            echo ""
-            git log ${RANGE} --pretty=format:"- %s" --no-merges
-            echo ""
-          } > notes.md
-
-      - name: Create release
+      - uses: goreleaser/goreleaser-action@v6
+        with:
+          version: latest
+          args: release --clean
         env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          gh release create ${GITHUB_REF_NAME} dist/* \
-            --title "${GITHUB_REF_NAME}" \
-            --notes-file notes.md
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HOMEBREW_TAP_GITHUB_TOKEN: ${{ secrets.HOMEBREW_TAP_GITHUB_TOKEN }}
