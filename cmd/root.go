@@ -67,6 +67,7 @@ func Run() int {
 	var (
 		jsonFlag    bool
 		summaryFlag bool
+		hookFlag    bool
 		noColor     bool
 		skip        StringSliceFlag
 		only        StringSliceFlag
@@ -78,6 +79,7 @@ func Run() int {
 
 	flag.BoolVar(&jsonFlag, "json", false, "JSON 形式で出力")
 	flag.BoolVar(&summaryFlag, "summary", false, "件数のみ表示")
+	flag.BoolVar(&hookFlag, "hook", false, "Claude Code フックモード: systemMessage JSON を出力")
 	flag.BoolVar(&noColor, "no-color", false, "ANSI カラー無効化")
 	flag.Var(&skip, "skip", "特定スキャナをスキップ（複数指定可）")
 	flag.Var(&only, "only", "指定スキャナのみ実行（--skip と排他）")
@@ -95,6 +97,15 @@ func Run() int {
 	if versionFlag {
 		fmt.Printf("envguard %s\n", version)
 		return 0
+	}
+
+	// --hook implies quiet, no-color, and defaults min-risk to high
+	if hookFlag {
+		quiet = true
+		noColor = true
+		if minRisk == "" {
+			minRisk = "high"
+		}
 	}
 
 	// Validate --skip and --only are not both specified
@@ -204,7 +215,13 @@ func Run() int {
 	}
 
 	// Output
-	if jsonFlag {
+	if hookFlag {
+		if err := reporter.RenderHook(os.Stdout, allFindings); err != nil {
+			fmt.Fprintf(os.Stderr, "エラー: フック出力に失敗: %v\n", err)
+			return 2
+		}
+		return 0
+	} else if jsonFlag {
 		if err := reporter.RenderJSON(os.Stdout, allFindings, advices, warnings); err != nil {
 			fmt.Fprintf(os.Stderr, "エラー: JSON 出力に失敗: %v\n", err)
 			return 2
