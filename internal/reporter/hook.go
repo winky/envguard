@@ -11,6 +11,7 @@ import (
 
 type hookOutput struct {
 	SystemMessage string `json:"systemMessage,omitempty"`
+	Continue      *bool  `json:"continue,omitempty"`
 }
 
 // RenderHook writes a Claude Code hook-compatible JSON to w.
@@ -37,5 +38,6 @@ func RenderHook(w io.Writer, findings []scanner.Finding) error {
 		strings.Join(parts, " / "),
 	)
 
-	return json.NewEncoder(w).Encode(hookOutput{SystemMessage: msg})
+	cont := false
+	return json.NewEncoder(w).Encode(hookOutput{SystemMessage: msg, Continue: &cont})
 }
