@@ -11,7 +11,7 @@ import (
 	"github.com/winky/envguard/internal/scanner"
 )
 
-const version = "0.1.0"
+var version = "dev"
 
 // StringSliceFlag implements flag.Value for repeated string flags.
 type StringSliceFlag []string
